@@ -1,5 +1,9 @@
 # PdfiumViewer
 
+Created this fork because the original repo has been archived and is not being maintained. While this repo has the C# code for the viewer control, the real work is done in the `pdfium.dll` and that is a C++ project with some "fun" build instructions. Those are in the wiki [here](https://github.com/northwoodspd/PdfiumViewer/wiki/Building-PDFium).
+___
+# Original repo readme:
+
 Apache 2.0 License.
 
 [Download from NuGet](http://nuget.org/packages/PdfiumViewer).
