@@ -334,7 +334,7 @@ namespace PdfiumViewer
         {
             lock (LockString)
             {
-                return Imports.FPDFDest_GetPageIndex(document, dest);
+                return Imports.FPDFDest_GetDestPageIndex(document, dest);
             }
         }
 
@@ -597,8 +597,8 @@ namespace PdfiumViewer
             [DllImport("pdfium.dll")]
             public static extern void FPDF_Release();
 
-            [DllImport("pdfium.dll", CharSet = CharSet.Ansi)]            
-            public static extern IntPtr FPDF_LoadCustomDocument([MarshalAs(UnmanagedType.LPStruct)]FPDF_FILEACCESS access, string password);
+            [DllImport("pdfium.dll", CharSet = CharSet.Ansi)]
+            public static extern IntPtr FPDF_LoadCustomDocument([MarshalAs(UnmanagedType.LPStruct)] FPDF_FILEACCESS access, string password);
 
             [DllImport("pdfium.dll", CharSet = CharSet.Ansi)]
             public static extern IntPtr FPDF_LoadMemDocument(SafeHandle data_buf, int size, string password);
@@ -712,7 +712,7 @@ namespace PdfiumViewer
             public static extern IntPtr FPDFLink_GetDest(IntPtr document, IntPtr link);
 
             [DllImport("pdfium.dll")]
-            public static extern uint FPDFDest_GetPageIndex(IntPtr document, IntPtr dest);
+            public static extern uint FPDFDest_GetDestPageIndex(IntPtr document, IntPtr dest);
 
             [DllImport("pdfium.dll")]
             public static extern bool FPDFLink_GetAnnotRect(IntPtr linkAnnot, FS_RECTF rect);
@@ -756,17 +756,17 @@ namespace PdfiumViewer
             #region Save/Edit APIs
 
             [DllImport("pdfium.dll")]
-            public static extern bool FPDF_ImportPages(IntPtr destDoc, IntPtr srcDoc, [MarshalAs(UnmanagedType.LPStr)]string pageRange, int index);
+            public static extern bool FPDF_ImportPages(IntPtr destDoc, IntPtr srcDoc, [MarshalAs(UnmanagedType.LPStr)] string pageRange, int index);
 
             [DllImport("pdfium.dll")]
             public static extern bool FPDF_SaveAsCopy(IntPtr doc,
-                [MarshalAs(UnmanagedType.LPStruct)]FPDF_FILEWRITE writer,
-                [MarshalAs(UnmanagedType.I4)]FPDF_SAVE_FLAGS flag);
+                [MarshalAs(UnmanagedType.LPStruct)] FPDF_FILEWRITE writer,
+                [MarshalAs(UnmanagedType.I4)] FPDF_SAVE_FLAGS flag);
 
             [DllImport("pdfium.dll")]
             public static extern bool FPDF_SaveWithVersion(IntPtr doc,
-                [MarshalAs(UnmanagedType.LPStruct)]FPDF_FILEWRITE writer,
-                [MarshalAs(UnmanagedType.I4)]FPDF_SAVE_FLAGS flags,
+                [MarshalAs(UnmanagedType.LPStruct)] FPDF_FILEWRITE writer,
+                [MarshalAs(UnmanagedType.I4)] FPDF_SAVE_FLAGS flags,
                 int fileVersion);
 
             [DllImport("pdfium.dll")]
@@ -785,7 +785,7 @@ namespace PdfiumViewer
             public static extern IntPtr FPDF_CreateNewDocument();
 
             [DllImport("pdfium.dll")]
-            public static extern IntPtr FPDFPageObj_NewImgeObj(IntPtr document);
+            public static extern IntPtr FPDFPageObj_NewImageObj(IntPtr document);
 
             [DllImport("pdfium.dll")]
             public static extern bool FPDFImageObj_SetBitmap(IntPtr pages, int count, IntPtr imageObject, IntPtr bitmap);
