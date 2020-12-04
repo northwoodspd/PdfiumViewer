@@ -17,7 +17,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\*.dll" target="lib\net472" />
-    <file src="PdfiumViewer.targets" target="build\PdfiumViewer.targets" />
+    <file src="bin\Release\PdfiumViewer.dll" target="lib\net472" />
   </files>
 </package>
