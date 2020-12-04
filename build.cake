@@ -134,6 +134,7 @@ Action setAssemblyVersion = () =>
     Information($"Using AssemblyVersion({version})");
 
     ReplaceTextInFiles("SolutionAssemblyInfo.cs", v, version);
+    ReplaceTextInFiles("**/*.nuspec", "$version$", nugetVersion());
 };
 
 ///
@@ -284,6 +285,7 @@ Func<string> gitBranch = () => {
 ///
 Func<string> nugetVersion = () => {
     var version = assemblyVersion();
+    version = version.Substring(0, version.LastIndexOf('.'));
 
     return "master".Equals(gitBranch()) ? version : $"{version}-beta";
 };
@@ -305,33 +307,27 @@ Action nugetPack = () =>
 
     CreateDirectory(nugetDir);
 
-    foreach (var slnProject in slnProjects) {
-        Information($"Packing {slnProject.Name}");
+    simpleNuGetPack("./PdfiumViewer/PdfiumViewer.nuspec");
+};
 
-        var project = ParseProject(slnProject.Path);
-        var dill = slnProject.Path.GetDirectory().CombineWithFilePath(File($"./bin/{configuration}/{project.AssemblyName}.dll"));
-        var target = "lib/" + project.TargetFrameworkVersion.Replace(".", "").Replace("v", "net");
-
-        var nuGetPackSettings   = new NuGetPackSettings {
-            Id                       = project.AssemblyName,
-            Version                  = nugetVersion(),
-            Title                    = project.AssemblyName,
-            Authors                  = new[] {"productdelivery@teamnorthwoods.com"},
-            Owners                   = new[] {"productdelivery@teamnorthwoods.com"},
-            Description              = project.AssemblyName,
-            Summary                  = project.AssemblyName,
-            ProjectUrl               = new Uri($"https://github.com/northwoodspd/{solutionName()}"),
-            Copyright                = "Northwoods Consulting Partners 2020",
-            RequireLicenseAcceptance = false,
-            Symbols                  = true,
-            NoPackageAnalysis        = true,
-            Files                    = new [] { new NuSpecContent{Source = dill.FullPath, Target = target} },
-            OutputDirectory          = "./nuget",
-            ToolTimeout              = TimeSpan.FromMinutes(1),
-            Verbosity                = NuGetVerbosity.Normal
-        };
-
-        NuGetPack(nuGetPackSettings);
+Action<string> simpleNuGetPack = (nuspecPath) =>
+{
+    IEnumerable<string> standardOutput;
+    IEnumerable<string> standardError;
+    
+    var exitCode = StartProcess("nuget", new ProcessSettings
+    { 
+        Arguments = $"pack {nuspecPath} -OutputDirectory ./nuget",
+        RedirectStandardOutput = true, 
+        RedirectStandardError = true 
+    }, out standardOutput, out standardError);
+    
+    Information(string.Join(Environment.NewLine, standardOutput));
+    
+    if(exitCode != 0)
+    {
+        Error(string.Join(Environment.NewLine, standardError));
+        throw new Exception($"Unable to pack nuspec {nuspecPath}");
     }
 };
 
