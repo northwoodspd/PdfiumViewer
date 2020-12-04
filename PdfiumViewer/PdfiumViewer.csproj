@@ -152,20 +152,20 @@
     <EmbeddedResource Include="pan.cur" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Libraries\icuuc.dll">
+    <Content Include="..\Libraries\icuuc.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Libraries\libc++.dll">
+    </Content>
+    <Content Include="..\Libraries\libc++.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Libraries\pdfium.dll">
+    <Content Include="..\Libraries\pdfium.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Libraries\zlib.dll">
+    </Content>
+    <Content Include="..\Libraries\zlib.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
