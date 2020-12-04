@@ -403,7 +403,7 @@ Task("Build")
 Task("Test")
     .IsDependentOn("Build")
     .Does(() => {
-        executeTests(testAssemblyPattern, "unit", dotCoversettings => { }, 60000, TimeSpan.FromMinutes(5));
+        executeTests(testAssemblyPattern, "unit", dotCoversettings => { }, 180000, TimeSpan.FromMinutes(5));
     });
 
 ///
